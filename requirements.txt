@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+plotly
+vnstock
+scikit-learn
+streamlit-option-menu
+openpyxl
