@@ -408,7 +408,52 @@ _LANG = {
     'Chỉ số Công nghệ/Dịch vụ (Tech/Services)': 'Tech/Services Metrics',
     'Vòng quay Tồn kho (Lần)': 'Inventory Turnover (Times)',
     'Tốc độ thu hồi công nợ (Ngày)': 'Days Sales Outstanding (Days)',
-    'Biên EBIT (%)': 'EBIT Margin (%)'
+    'Biên EBIT (%)': 'EBIT Margin (%)',
+    
+    # New Modules: BvA & Cashflow
+    '2. Phân tích Biến động (BvA)': '2. Variance Analysis (BvA)',
+    '3. Dự báo Dòng tiền (Cashflow Forecasting)': '3. Cashflow Forecasting',
+    'Thực tế so với Ngân sách (Budget vs Actual)': 'Budget vs Actual (BvA) Analysis',
+    'Chênh lệch (Variance)': 'Variance',
+    'Vượt ngân sách (Favorable)': 'Favorable',
+    'Hụt ngân sách (Unfavorable)': 'Unfavorable',
+    'Giải thích chênh lệch (Waterfall Chart)': 'Variance Explanation (Waterfall Chart)',
+    'Ngân sách (Lãi ròng)': 'Budget (Net Profit)',
+    'Vượt/hụt Doanh thu': 'Revenue Variance',
+    'Tiết kiệm/Lạm Giá vốn': 'COGS Variance',
+    'Tiết kiệm/Lạm Chi phí HĐ': 'SG&A Variance',
+    'Khác': 'Other',
+    'Thực tế (Lãi ròng)': 'Actual (Net Profit)',
+    'Dự báo Dòng tiền & Thanh khoản': 'Cashflow & Liquidity Forecasting',
+    'Ngân sách Đầu tư tài sản (CAPEX) - Tỷ VND': 'Capital Expenditure Budget (CAPEX) - Bn VND',
+    'Chu kỳ thu tiền (Days Sales Outstanding - DSO)': 'Days Sales Outstanding (DSO)',
+    'Chu kỳ thanh toán (Days Payable - DPO)': 'Days Payable Outstanding (DPO)',
+    'Dòng tiền Hoạt động (OCF)': 'Operating Cash Flow (OCF)',
+    'Dòng tiền Đầu tư (ICF)': 'Investing Cash Flow (ICF)',
+    'Dòng tiền Tự do (FCF)': 'Free Cash Flow (FCF)',
+    'Số dư Tiền mặt Cuối kỳ': 'Ending Cash Balance',
+    'Cảnh báo ĐỎ: Nguy cơ phá sản thanh khoản! Dòng tiền rơi xuống mức âm.': 'RED Warning: Liquidity bankruptcy risk! Cashflow dropped below zero.',
+    'Cảnh báo CAM: Quỹ tiền mặt đã chạm ngưỡng rủi ro (dưới mức Safety Stock định trước). Hãy rà soát lại kế hoạch vốn.': 'ORANGE Warning: Cash balance hit risk threshold (below Safety Stock). Review capital plan.',
+    'An toàn: Quỹ tiền mặt đảm bảo khả năng thanh toán và duy trì trên mức Safety Stock.': 'Safe: Cash reserve covers obligations and stays above Safety Stock.',
+    'Ngưỡng Tiền mặt An toàn (Tỷ VND)': 'Safety Stock of Cash (Bn VND)',
+    '(Công thức % BvA = Thực tế/Ngân sách - 1. Nếu là hạng mục Chi phí, số Âm thể hiện sự Tiết kiệm so với Ngân sách và là Tín hiệu Tốt).': '(Formula % BvA = Actual/Budget - 1. For expense items, a Negative number shows Savings vs Budget and is a Good Signal).',
+    
+    # BvA module - additional translations
+    'Giả lập Ngân sách: Vì dữ liệu Báo cáo Tài chính tự động không có số liệu Ngân sách, hệ thống giả định Ngân sách năm nay = Thực tế năm trước * % Tăng trưởng kế hoạch.': 'Simulated Budget: Since financial statement data has no Budget figures, the system assumes Budget = Prior Year Actuals * % Target Growth.',
+    'Mục tiêu Tăng trưởng Doanh thu (%)': 'Revenue Growth Target (%)',
+    'Ngân sách Giá vốn (% so năm trước)': 'COGS Budget (% vs Prior Year)',
+    'Ngân sách Chi phí QLDN/BH (% so năm trước)': 'SG&A Budget (% vs Prior Year)',
+    'Hạng mục': 'Line Item',
+    'Thực tế': 'Actual',
+    'Ngân sách': 'Budget',
+    'Chênh lệch (Abs)': 'Variance (Abs)',
+    'Đánh giá': 'Rating',
+    'Lợi nhuận Gộp': 'Gross Profit',
+    'Chi phí HĐKD (SG&A)': 'SG&A Expenses',
+    'Lợi nhuận Ròng': 'Net Profit',
+    
+    # Cashflow module - additional translations
+    'Áp dụng phương pháp Gián tiếp (Indirect Method) để dự phóng dòng tiền dựa trên Lợi nhuận kỳ vọng và Cấp vốn Lưu động.': 'Using the Indirect Method to forecast cashflow based on Expected Profit and Working Capital changes.'
 }
 
 def t(text):
@@ -424,8 +469,8 @@ with st.sidebar:
     st.markdown(f"### 👔 {t('CFO Workspace')}")
     selected_module = option_menu(
         menu_title=None, 
-        options=["1. FP&A Dashboard", "2. Financial Modeling", "3. Wealth Management", "4. About Me"], 
-        icons=["diagram-3", "calculator", "pie-chart", "person-badge"], 
+        options=["1. FP&A Dashboard", "2. Variance Analysis (BvA)", "3. Cashflow Forecast", "4. Financial Modeling", "5. Wealth Management", "6. About Me"], 
+        icons=["diagram-3", "bar-chart-steps", "cash-coin", "calculator", "pie-chart", "person-badge"], 
         default_index=0,
         styles={
             "container": {"background-color": "transparent"},
@@ -1073,7 +1118,250 @@ if selected_module == "1. FP&A Dashboard":
     else:
         st.info(t("Cần ít nhất 2 kỳ dữ liệu thực tế để mô hình AI thiết lập lưới dự báo."))
  
-elif selected_module == "2. Financial Modeling":
+elif selected_module == "2. Variance Analysis (BvA)":
+    st.markdown(f'<div class="section-title">📊 {t("2. Phân tích Biến động (BvA)")}</div>', unsafe_allow_html=True)
+    st.markdown(f"### {t('Thực tế so với Ngân sách (Budget vs Actual)')}")
+    
+    st.markdown(f"> **{t('Giả lập Ngân sách: Vì dữ liệu Báo cáo Tài chính tự động không có số liệu Ngân sách, hệ thống giả định Ngân sách năm nay = Thực tế năm trước * % Tăng trưởng kế hoạch.')}**")
+    
+    col_bgt1, col_bgt2, col_bgt3 = st.columns(3)
+    with col_bgt1:
+        rev_target_pct = st.number_input(t("Mục tiêu Tăng trưởng Doanh thu (%)"), min_value=-50, max_value=200, value=15)
+    with col_bgt2:
+        cogs_target_pct = st.number_input(t("Ngân sách Giá vốn (% so năm trước)"), min_value=-50, max_value=200, value=10)
+    with col_bgt3:
+        sga_target_pct = st.number_input(t("Ngân sách Chi phí QLDN/BH (% so năm trước)"), min_value=-50, max_value=200, value=5)
+        
+    st.markdown(f"*{t('(Công thức % BvA = Thực tế/Ngân sách - 1. Nếu là hạng mục Chi phí, số Âm thể hiện sự Tiết kiệm so với Ngân sách và là Tín hiệu Tốt).')}*")
+
+    rev_act = rev
+    cogs_act = cogs
+    sga_act = sga
+    gp_act = gross_profit
+    
+    rev_prev_1 = rev_series[-2] if len(rev_series) > 1 else rev
+    cogs_prev_1 = abs(cogs_series[-2]) if len(cogs_series) > 1 else cogs
+    sga_prev_1 = abs(sga_series[-2]) if len(sga_series) > 1 else sga
+    
+    rev_budget = rev_prev_1 * (1 + rev_target_pct/100.0)
+    cogs_budget = cogs_prev_1 * (1 + cogs_target_pct/100.0)
+    sga_budget = sga_prev_1 * (1 + sga_target_pct/100.0)
+    gp_budget = rev_budget - cogs_budget
+    np_budget = gp_budget - sga_budget - other_expenses
+    
+    def calc_var(act, bgt, is_expense=False):
+        var = act - bgt
+        pct = (var / bgt) * 100 if bgt != 0 else 0
+        is_fav = (var < 0) if is_expense else (var >= 0)
+        return var, pct, is_fav
+        
+    v_rev, p_rev, f_rev = calc_var(rev_act, rev_budget)
+    v_cogs, p_cogs, f_cogs = calc_var(cogs_act, cogs_budget, is_expense=True)
+    v_gp, p_gp, f_gp = calc_var(gp_act, gp_budget)
+    v_sga, p_sga, f_sga = calc_var(sga_act, sga_budget, is_expense=True)
+    v_np, p_np, f_np = calc_var(net_profit, np_budget)
+    
+    bva_df = pd.DataFrame({
+        t("Hạng mục"): [t("Doanh thu"), t("Giá vốn Hàng bán"), t("Lợi nhuận Gộp"), t("Chi phí HĐKD (SG&A)"), t("Lợi nhuận Ròng")],
+        t("Thực tế"): [f"{rev_act/1e9:,.0f}", f"{cogs_act/1e9:,.0f}", f"{gp_act/1e9:,.0f}", f"{sga_act/1e9:,.0f}", f"{net_profit/1e9:,.0f}"],
+        t("Ngân sách"): [f"{rev_budget/1e9:,.0f}", f"{cogs_budget/1e9:,.0f}", f"{gp_budget/1e9:,.0f}", f"{sga_budget/1e9:,.0f}", f"{np_budget/1e9:,.0f}"],
+        t("Chênh lệch (Abs)"): [f"{v_rev/1e9:,.0f}", f"{v_cogs/1e9:,.0f}", f"{v_gp/1e9:,.0f}", f"{v_sga/1e9:,.0f}", f"{v_np/1e9:,.0f}"],
+        "% BvA": [f"{p_rev:+.1f}%", f"{p_cogs:+.1f}%", f"{p_gp:+.1f}%", f"{p_sga:+.1f}%", f"{p_np:+.1f}%"],
+        t("Đánh giá"): ["🟢" if f_rev else "🔴", "🟢" if f_cogs else "🔴", "🟢" if f_gp else "🔴", "🟢" if f_sga else "🔴", "🟢" if f_np else "🔴"]
+    })
+    
+    st.table(bva_df.set_index(t("Hạng mục")))
+    
+    st.markdown(f"### {t('Giải thích chênh lệch (Waterfall Chart)')}")
+    # Tính phần chênh lệch "Khác" (other_expenses variance) để waterfall cân bằng
+    other_var = net_profit - (np_budget + v_rev - v_cogs - v_sga)
+    
+    wf_measures = ["absolute", "relative", "relative", "relative", "total"]
+    wf_x = [t("Ngân sách (Lãi ròng)"), t("Vượt/hụt Doanh thu"), t("Tiết kiệm/Lạm Giá vốn"), t("Tiết kiệm/Lạm Chi phí HĐ"), t("Thực tế (Lãi ròng)")]
+    wf_text = [f"{np_budget/1e9:,.0f}", f"{v_rev/1e9:,.0f}", f"{-v_cogs/1e9:,.0f}", f"{-v_sga/1e9:,.0f}", f"{net_profit/1e9:,.0f}"]
+    wf_y = [np_budget/1e9, v_rev/1e9, -v_cogs/1e9, -v_sga/1e9, net_profit/1e9]
+    
+    # Chỉ thêm cột "Khác" nếu giá trị khác 0 đáng kể
+    if abs(other_var/1e9) >= 1:
+        wf_measures = ["absolute", "relative", "relative", "relative", "relative", "total"]
+        wf_x = [t("Ngân sách (Lãi ròng)"), t("Vượt/hụt Doanh thu"), t("Tiết kiệm/Lạm Giá vốn"), t("Tiết kiệm/Lạm Chi phí HĐ"), t("Khác"), t("Thực tế (Lãi ròng)")]
+        wf_text = [f"{np_budget/1e9:,.0f}", f"{v_rev/1e9:,.0f}", f"{-v_cogs/1e9:,.0f}", f"{-v_sga/1e9:,.0f}", f"{other_var/1e9:,.0f}", f"{net_profit/1e9:,.0f}"]
+        wf_y = [np_budget/1e9, v_rev/1e9, -v_cogs/1e9, -v_sga/1e9, other_var/1e9, net_profit/1e9]
+    
+    fig_wf = go.Figure(go.Waterfall(
+        name = "2023", orientation = "v",
+        measure = wf_measures,
+        x = wf_x,
+        textposition = "outside",
+        text = wf_text,
+        y = wf_y,
+        connector = {"line":{"color":"rgb(63, 63, 63)"}},
+        decreasing = {"marker":{"color":"#E74C3C"}},
+        increasing = {"marker":{"color":"#2ECC71"}},
+        totals = {"marker":{"color":"#3498DB"}}
+    ))
+    fig_wf.update_layout(height=400, margin=dict(t=30, b=10, l=10, r=10), showlegend=False, plot_bgcolor='rgba(0,0,0,0)')
+    st.plotly_chart(fig_wf, use_container_width=True)
+
+    # === STRATEGIC INSIGHTS BvA ===
+    st.markdown("---")
+    # Đếm số hạng mục Favorable / Unfavorable
+    fav_count = sum([f_rev, f_cogs, f_gp, f_sga, f_np])
+    unfav_count = 5 - fav_count
+    
+    # Xác định driver chính (biến gây ảnh hưởng lớn nhất)
+    variances = {'Doanh thu': abs(v_rev), 'Giá vốn': abs(v_cogs), 'Chi phí SG&A': abs(v_sga)}
+    biggest_driver = max(variances, key=variances.get)
+    biggest_val = variances[biggest_driver]
+    
+    if st.session_state.get('lang', '🇻🇳 Tiếng Việt') == '🇬🇧 English':
+        if f_np:
+            bva_insight = f'''**Overall Assessment: ✅ FAVORABLE** — The company outperformed its budget with **{fav_count}/5** line items meeting or exceeding targets.
+
+**Root Cause:** The largest variance driver is **{biggest_driver}** (±{biggest_val/1e9:,.0f} Bn VND). This suggests the management team has {'effectively controlled costs' if biggest_driver != 'Doanh thu' else 'strong commercial momentum'}.
+
+**Recommendation for Leadership:** Capture this outperformance by allocating excess profit to: (1) R&D reserves, (2) Debt reduction, or (3) Shareholder returns.'''
+        else:
+            bva_insight = f'''**Overall Assessment: ⚠️ UNFAVORABLE** — The company missed its budget target with **{unfav_count}/5** line items underperforming.
+
+**Root Cause:** The largest variance driver is **{biggest_driver}** (±{biggest_val/1e9:,.0f} Bn VND). {'Revenue shortfall indicates weakening demand or pricing pressure.' if biggest_driver == 'Doanh thu' else 'Cost overruns suggest supply chain inflation or operational inefficiency.'}
+
+**Action Plan:** (1) Freeze discretionary spending, (2) Renegotiate supplier contracts, (3) Accelerate receivables collection to protect cash position.'''
+    else:
+        if f_np:
+            bva_insight = f'''**Đánh giá chung: ✅ THUẬN LỢI (Favorable)** — Doanh nghiệp vượt Ngân sách với **{fav_count}/5** hạng mục đạt hoặc vượt chỉ tiêu.
+
+**Nguyên nhân gốc rễ:** Biến số tác động lớn nhất là **{biggest_driver}** (±{biggest_val/1e9:,.0f} Tỷ VND). Điều này cho thấy ban điều hành {'đã kiểm soát chi phí hiệu quả' if biggest_driver != 'Doanh thu' else 'có động lực tăng trưởng thương mại mạnh mẽ'}.
+
+**Khuyến nghị Ban lãnh đạo:** Tận dụng phần lợi nhuận vượt kế hoạch bằng cách phân bổ vào: (1) Quỹ R&D, (2) Trả nợ vay, hoặc (3) Cổ tức cho Cổ đông.'''
+        else:
+            bva_insight = f'''**Đánh giá chung: ⚠️ BẤT LỢI (Unfavorable)** — Doanh nghiệp hụt Ngân sách với **{unfav_count}/5** hạng mục không đạt chỉ tiêu.
+
+**Nguyên nhân gốc rễ:** Biến số tác động lớn nhất là **{biggest_driver}** (±{biggest_val/1e9:,.0f} Tỷ VND). {'Hụt thu cho thấy sức cầu suy yếu hoặc áp lực giá bán.' if biggest_driver == 'Doanh thu' else 'Lạm chi phí cho thấy lạm phát chuỗi cung ứng hoặc vận hành kém hiệu quả.'}
+
+**Kế hoạch hành động:** (1) Đóng băng chi tiêu tùy ý, (2) Tái đàm phán hợp đồng nhà cung cấp, (3) Đẩy nhanh thu hồi công nợ để bảo toàn dòng tiền.'''
+    
+    st.markdown(f'''
+    <div style="background-color: {'#E8F8F5' if f_np else '#FDEDEC'}; border-left: 4px solid {'#1ABC9C' if f_np else '#E74C3C'}; padding: 15px; border-radius: 4px; margin-top: 10px;">
+        <strong style="color: {'#117A65' if f_np else '#922B21'};">🤖 Nhận định từ Hệ thống Phân tích BvA (FP&A Insights):</strong><br><br>
+        {bva_insight.replace(chr(10), '<br>')}
+    </div>
+    ''', unsafe_allow_html=True)
+
+elif selected_module == "3. Cashflow Forecast":
+    st.markdown(f'<div class="section-title">🌊 {t("3. Dự báo Dòng tiền (Cashflow Forecasting)")}</div>', unsafe_allow_html=True)
+    st.markdown(f"### {t('Dự báo Dòng tiền & Thanh khoản')}")
+    
+    st.info(t('Áp dụng phương pháp Gián tiếp (Indirect Method) để dự phóng dòng tiền dựa trên Lợi nhuận kỳ vọng và Cấp vốn Lưu động.'))
+    
+    cf_c1, cf_c2, cf_c3 = st.columns(3)
+    with cf_c1:
+        capex_input = st.number_input(t("Ngân sách Đầu tư tài sản (CAPEX) - Tỷ VND"), min_value=0, max_value=50000, value=500, step=100) * 1e9
+    with cf_c2:
+        dso_input = st.number_input(t("Chu kỳ thu tiền (Days Sales Outstanding - DSO)"), min_value=0, max_value=360, value=45, step=5)
+    with cf_c3:
+        dpo_input = st.number_input(t("Chu kỳ thanh toán (Days Payable - DPO)"), min_value=0, max_value=360, value=30, step=5)
+    
+    sf_col1, sf_col2, sf_col3 = st.columns(3)
+    with sf_col1:
+        safety_stock_input = st.number_input(t("Ngưỡng Tiền mặt An toàn (Tỷ VND)"), min_value=0, max_value=100000, value=100, step=10) * 1e9
+    
+    cf_periods = [f"Q{i}" for i in range(1, 5)]
+    baseline_cash = cash
+    
+    depr_forecast = float(get_val(bs_df, ['total assets', 'tổng cộng tài sản'])) * 0.05 / 4
+    
+    cash_balances = []
+    fcf_list = []
+    
+    current_cash = baseline_cash
+    for i in range(4):
+        q_profit = (net_profit / 4) * (1 + 0.05 * i)
+        wc_effect = (dpo_input - dso_input) * (rev / 360) / 4
+        ocf = q_profit + depr_forecast + wc_effect
+        fcf = ocf - (capex_input / 4)
+        current_cash = current_cash + fcf
+        
+        fcf_list.append(fcf)
+        cash_balances.append(current_cash)
+        
+    cf_fig = go.Figure()
+    cf_colors = ['#E74C3C' if v<0 else '#1ABC9C' for v in fcf_list]
+    cf_fig.add_trace(go.Bar(x=cf_periods, y=[v/1e9 for v in fcf_list], name=t("Dòng tiền Tự do (FCF)"), marker_color=cf_colors))
+    cf_fig.add_trace(go.Scatter(x=cf_periods, y=[v/1e9 for v in cash_balances], mode='lines+markers+text', name=t("Số dư Tiền mặt Cuối kỳ"),
+                                line=dict(color='#34495E', width=3), text=[f"{v/1e9:,.0f}T" for v in cash_balances], textposition="top center", yaxis="y2"))
+    
+    # Đường ngưỡng Safety Stock (nét đứt đỏ) trên trục y2
+    cf_fig.add_trace(go.Scatter(
+        x=cf_periods, y=[safety_stock_input/1e9]*4,
+        mode='lines', name=f"Ngưỡng Safety Stock ({safety_stock_input/1e9:,.0f}T)",
+        line=dict(color='#E74C3C', width=2, dash='dash'), yaxis="y2"
+    ))
+    
+    # Đảm bảo trục y2 hiển thị cả Safety Stock line
+    all_y2_vals = [v/1e9 for v in cash_balances] + [safety_stock_input/1e9]
+    y2_min = min(all_y2_vals) * 0.9 if min(all_y2_vals) > 0 else min(all_y2_vals) * 1.1
+    y2_max = max(all_y2_vals) * 1.15
+    
+    cf_fig.update_layout(
+        height=400, margin=dict(t=40, b=10, l=10, r=10), plot_bgcolor='rgba(0,0,0,0)',
+        yaxis2=dict(overlaying='y', side='right', showgrid=False, range=[y2_min, y2_max]),
+        legend=dict(orientation="h", y=1.15, x=0.5, xanchor='center')
+    )
+    st.plotly_chart(cf_fig, use_container_width=True)
+    
+    # Summary Metrics
+    sm1, sm2, sm3, sm4 = st.columns(4)
+    sm1.metric(t("Tiền mặt (Cash)"), f"{baseline_cash/1e9:,.0f} T", "Đầu kỳ")
+    sm2.metric(t("Số dư Tiền mặt Cuối kỳ"), f"{cash_balances[-1]/1e9:,.0f} T", f"{(cash_balances[-1]-baseline_cash)/1e9:+,.0f} T")
+    sm3.metric(t("Dòng tiền Tự do (FCF)"), f"{sum(fcf_list)/1e9:,.0f} T", "Tổng 4 kỳ")
+    sm4.metric(t("Ngưỡng Tiền mặt An toàn (Tỷ VND)"), f"{safety_stock_input/1e9:,.0f} T")
+    
+    st.markdown("---")
+    min_cash = min(cash_balances)
+    if min_cash < 0:
+        st.error(t('Cảnh báo ĐỎ: Nguy cơ phá sản thanh khoản! Dòng tiền rơi xuống mức âm.'))
+    elif min_cash < safety_stock_input:
+        st.warning(t('Cảnh báo CAM: Quỹ tiền mặt đã chạm ngưỡng rủi ro (dưới mức Safety Stock định trước). Hãy rà soát lại kế hoạch vốn.'))
+    else:
+        st.success(t('An toàn: Quỹ tiền mặt đảm bảo khả năng thanh toán và duy trì trên mức Safety Stock.'))
+    
+    # === STRATEGIC INSIGHTS CASHFLOW ===
+    cash_change = cash_balances[-1] - baseline_cash
+    cash_change_pct = (cash_change / baseline_cash * 100) if baseline_cash > 0 else 0
+    total_fcf = sum(fcf_list)
+    cash_runway_months = (cash_balances[-1] / (abs(total_fcf/4))) if total_fcf != 0 else 999
+    wc_gap = dso_input - dpo_input
+    
+    if st.session_state.get('lang', '🇻🇳 Tiếng Việt') == '🇬🇧 English':
+        cf_insight = f'''**Cash Position Summary:**
+- Starting Cash: **{baseline_cash/1e9:,.0f} Bn** → Ending Cash (Q4): **{cash_balances[-1]/1e9:,.0f} Bn** ({cash_change_pct:+.1f}%)
+- Total FCF generated over 4 quarters: **{total_fcf/1e9:,.0f} Bn VND**
+- Cash Runway: ~**{abs(cash_runway_months):.0f} quarters** of operating expenses at current burn rate
+
+**Working Capital Efficiency:**
+- Cash Conversion Gap (DSO - DPO) = **{wc_gap} days** {'⚠️ Cash is trapped in receivables longer than payables — unfavorable.' if wc_gap > 0 else '✅ Suppliers are financing your operations — favorable.'}
+
+**CFO Recommendation:** {'Maintain current capital structure. Consider deploying excess cash into yield-generating instruments or strategic acquisitions.' if cash_change >= 0 else 'Reduce CAPEX or renegotiate payment terms to stabilize cash reserves. Consider revolving credit facility as liquidity backstop.'}'''
+    else:
+        cf_insight = f'''**Tổng quan Tình trạng Quỹ tiền:**
+- Tiền mặt đầu kỳ: **{baseline_cash/1e9:,.0f} T** → Cuối Q4: **{cash_balances[-1]/1e9:,.0f} T** ({cash_change_pct:+.1f}%)
+- Tổng Dòng tiền Tự do (FCF) sinh ra trong 4 quý: **{total_fcf/1e9:,.0f} Tỷ VND**
+- Thời gian sống (Cash Runway): ~**{abs(cash_runway_months):.0f} quý** chi phí hoạt động ở mức hiện tại
+
+**Hiệu quả Vốn Lưu động (Working Capital):**
+- Khoảng cách Chuyển đổi Tiền (DSO - DPO) = **{wc_gap} ngày** {'⚠️ Tiền bị kẹt trong Công nợ phải thu lâu hơn Phải trả — bất lợi.' if wc_gap > 0 else '✅ Nhà cung cấp đang tài trợ cho hoạt động kinh doanh — thuận lợi.'}
+
+**Khuyến nghị CFO:** {'Duy trì cấu trúc vốn hiện tại. Cân nhắc triển khai tiền dư thừa vào các công cụ sinh lãi hoặc M&A chiến lược.' if cash_change >= 0 else 'Giảm CAPEX hoặc tái đàm phán điều khoản thanh toán để ổn định dự trữ tiền mặt. Cân nhắc mở hạn mức tín dụng tuần hoàn (Revolving Credit) làm lưới an toàn thanh khoản.'}'''
+    
+    st.markdown(f'''
+    <div style="background-color: {'#E8F8F5' if cash_change >= 0 else '#FDEDEC'}; border-left: 4px solid {'#1ABC9C' if cash_change >= 0 else '#E74C3C'}; padding: 15px; border-radius: 4px; margin-top: 10px;">
+        <strong style="color: {'#117A65' if cash_change >= 0 else '#922B21'};">🤖 Nhận định từ Hệ thống Dự báo Dòng tiền (Treasury Insights):</strong><br><br>
+        {cf_insight.replace(chr(10), '<br>')}
+    </div>
+    ''', unsafe_allow_html=True)
+
+elif selected_module == "4. Financial Modeling":
     st.markdown(f'<div class="section-title">🔮 {t("2. Mô Hình Kịch Bản Chiến Lược (Cases)")}</div>', unsafe_allow_html=True)
     
     if 'rev_gr' not in st.session_state:
@@ -1432,7 +1720,7 @@ elif selected_module == "2. Financial Modeling":
     t_mat = 'Công cụ Quản trị Rủi ro (Risk Matrix) trả lời câu hỏi "Chuyện gì xảy ra nếu...?". Vùng màu đỏ đại diện cho các kịch bản đe dọa trực tiếp đến cấu trúc vốn. Hãy đặc biệt chú ý đến biến trục Y (Core driver), vì chỉ một thay đổi nhỏ cũng có thể khiến lợi nhuận bốc hơi nhanh chóng.'
     st.info(f"💡 **{t('Strategic Insights (Gợi ý chiến lược):')}** {t(t_mat)}")
 
-elif selected_module == "3. Wealth Management":
+elif selected_module == "5. Wealth Management":
     st.markdown(f'<div class="section-title">⚖️ {t("3. Portfolio Wealth Management")}</div>', unsafe_allow_html=True)
     
     st.markdown(f"### {t('🛒 Xây dựng Danh mục')}")
@@ -1606,7 +1894,7 @@ elif selected_module == "3. Wealth Management":
             else:
                 st.error(t("Không đủ dữ liệu giá đóng cửa Offline để tính toán cho một số mã đã chọn."))
 
-elif selected_module == "4. About Me":
+elif selected_module == "6. About Me":
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2 = st.columns([1.5, 3.5], gap="large")
     
